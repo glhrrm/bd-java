@@ -7,7 +7,7 @@ public class OracleTest {
             //create jdb connection obj and load class
             Class.forName("oracle.jdbc.driver.OracleDriver");
             String urlBD = "jdbc:oracle:thin:@200.132.53.144:1521:orcl11";
-            Connection connection = DriverManager.getConnection(urlBD, "username", "password");
+            Connection connection = DriverManager.getConnection(urlBD, "usr76", "jurley");
 
             System.out.println("Conexão estabelecida com " + connection);
 
