@@ -1,5 +1,8 @@
 package pojo;
 
+import dao.VersaoDAO;
+import java.util.List;
+
 public class Versao {
 
     private int idVersao;
@@ -54,6 +57,26 @@ public class Versao {
         return sistema != null
                 ? "Versao{" + "idVersao=" + idVersao + ", versao=" + versao + ", novidades=" + novidades + ", sistema=" + sistema + '}'
                 : "Versao{" + "idVersao=" + idVersao + ", versao=" + versao + ", novidades=" + novidades + ", sistema não informado";
+    }
+    
+    public int insert() {
+        return new VersaoDAO().insert(this);
+    }
+
+    public List<Versao> listAll() {
+        return new VersaoDAO().listAll();
+    }
+
+    public int update(Versao v) {
+        return new VersaoDAO().update(v);
+    }
+
+    public int delete(int id) {
+        return new VersaoDAO().delete(id);
+    }
+
+    public Versao findById(int id) {
+        return new VersaoDAO().findById(id);
     }
 
 }

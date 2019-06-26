@@ -1,5 +1,8 @@
 package pojo;
 
+import dao.DepartamentoDAO;
+import java.util.List;
+
 public class Departamento {
 
     private int idDepartamento;
@@ -32,6 +35,26 @@ public class Departamento {
     @Override
     public String toString() {
         return "Departamento{" + "idDepartamento=" + idDepartamento + ", nome=" + nome + '}';
+    }
+    
+    public int insert() {
+        return new DepartamentoDAO().insert(this);
+    }
+
+    public List<Departamento> listAll() {
+        return new DepartamentoDAO().listAll();
+    }
+
+    public int update(Departamento d) {
+        return new DepartamentoDAO().update(d);
+    }
+
+    public int delete(int id) {
+        return new DepartamentoDAO().delete(id);
+    }
+
+    public Departamento findById(int id) {
+        return new DepartamentoDAO().findById(id);
     }
 
 }

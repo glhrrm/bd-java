@@ -1,5 +1,8 @@
 package pojo;
 
+import dao.PermissaoDAO;
+import java.util.List;
+
 public class Permissao {
 
     private int idPermissao;
@@ -32,6 +35,26 @@ public class Permissao {
     @Override
     public String toString() {
         return "Permissao{" + "idPermissao=" + idPermissao + ", nome=" + nome + '}';
+    }
+    
+    public int insert() {
+        return new PermissaoDAO().insert(this);
+    }
+
+    public List<Permissao> listAll() {
+        return new PermissaoDAO().listAll();
+    }
+
+    public int update(Permissao p) {
+        return new PermissaoDAO().update(p);
+    }
+
+    public int delete(int id) {
+        return new PermissaoDAO().delete(id);
+    }
+
+    public Permissao findById(int id) {
+        return new PermissaoDAO().findById(id);
     }
 
 }

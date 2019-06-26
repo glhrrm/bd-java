@@ -1,5 +1,8 @@
 package pojo;
 
+import dao.UsuarioDAO;
+import java.util.List;
+
 public class Usuario {
 
     private int idUsuario;
@@ -54,6 +57,26 @@ public class Usuario {
         return departamento != null && permissao != null
                 ? "Usuario{" + "idUsuario=" + idUsuario + ", nome=" + nome + ", departamento=" + departamento + ", permissao=" + permissao + '}'
                 : "Usuario{" + "idUsuario=" + idUsuario + ", nome=" + nome + ", departamento não informado, permissao não informada";
+    }
+    
+    public int insert() {
+        return new UsuarioDAO().insert(this);
+    }
+
+    public List<Usuario> listAll() {
+        return new UsuarioDAO().listAll();
+    }
+
+    public int update(Usuario u) {
+        return new UsuarioDAO().update(u);
+    }
+
+    public int delete(int id) {
+        return new UsuarioDAO().delete(id);
+    }
+
+    public Usuario findById(int id) {
+        return new UsuarioDAO().findById(id);
     }
 
 }

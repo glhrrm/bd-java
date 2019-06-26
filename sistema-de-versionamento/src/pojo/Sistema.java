@@ -1,20 +1,22 @@
 package pojo;
 
+import dao.SistemaDAO;
 import java.time.LocalDate;
+import java.util.List;
 
 public class Sistema {
 
     private int idSistema;
-    private boolean estado;
+    private boolean ativo;
     private LocalDate criacao;
     private Usuario usuario;
 
     public Sistema() {
     }
 
-    public Sistema(int idSistema, boolean estado, LocalDate criacao, Usuario usuario) {
+    public Sistema(int idSistema, boolean ativo, LocalDate criacao, Usuario usuario) {
         this.idSistema = idSistema;
-        this.estado = estado;
+        this.ativo = ativo;
         this.criacao = criacao;
         this.usuario = usuario;
     }
@@ -27,12 +29,12 @@ public class Sistema {
         this.idSistema = idSistema;
     }
 
-    public boolean isEstado() {
-        return estado;
+    public boolean isAtivo() {
+        return ativo;
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
     }
 
     public LocalDate getCriacao() {
@@ -54,8 +56,29 @@ public class Sistema {
     @Override
     public String toString() {
         return usuario != null
-                ? "Sistema{" + "idSistema=" + idSistema + ", estado=" + estado + ", criacao=" + criacao + ", usuario=" + usuario + '}'
-                : "Sistema{" + "idSistema=" + idSistema + ", estado=" + estado + ", criacao=" + criacao + ", usuario não informado";
+                ? "Sistema{" + "idSistema=" + idSistema + ", ativo=" + ativo + ", criacao=" + criacao + ", usuario=" + usuario + '}'
+                : "Sistema{" + "idSistema=" + idSistema + ", ativo=" + ativo + ", criacao=" + criacao + ", usuario não informado";
     }
+
+    public int insert() {
+        return new SistemaDAO().insert(this);
+    }
+
+    public List<Sistema> listAll() {
+        return new SistemaDAO().listAll();
+    }
+
+    public int update(Sistema s) {
+        return new SistemaDAO().update(s);
+    }
+
+    public int delete(int id) {
+        return new SistemaDAO().delete(id);
+    }
+
+    public Sistema findById(int id) {
+        return new SistemaDAO().findById(id);
+    }
+
 
 }
