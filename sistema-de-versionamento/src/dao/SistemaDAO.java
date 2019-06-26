@@ -6,7 +6,7 @@ import pojo.Sistema;
 public class SistemaDAO implements DAO<Sistema> {
 
     @Override
-    public int insert() {
+    public int insert(Sistema s) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -16,7 +16,7 @@ public class SistemaDAO implements DAO<Sistema> {
     }
 
     @Override
-    public int update(Sistema t) {
+    public int update(Sistema s) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

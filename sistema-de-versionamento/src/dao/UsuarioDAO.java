@@ -6,7 +6,7 @@ import pojo.Usuario;
 public class UsuarioDAO implements DAO<Usuario> {
 
     @Override
-    public int insert() {
+    public int insert(Usuario u) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -16,7 +16,7 @@ public class UsuarioDAO implements DAO<Usuario> {
     }
 
     @Override
-    public int update(Usuario t) {
+    public int update(Usuario u) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

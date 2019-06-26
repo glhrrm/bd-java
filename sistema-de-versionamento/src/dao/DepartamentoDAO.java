@@ -6,7 +6,7 @@ import pojo.Departamento;
 public class DepartamentoDAO implements DAO<Departamento> {
 
     @Override
-    public int insert() {
+    public int insert(Departamento d) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -16,7 +16,7 @@ public class DepartamentoDAO implements DAO<Departamento> {
     }
 
     @Override
-    public int update(Departamento t) {
+    public int update(Departamento d) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

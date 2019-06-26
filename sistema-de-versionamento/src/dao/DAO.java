@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface DAO<T> {
 
-    public int insert();
+    public int insert(T t);
 
     public List<T> listAll();
 

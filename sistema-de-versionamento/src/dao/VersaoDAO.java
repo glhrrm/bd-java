@@ -6,7 +6,7 @@ import pojo.Versao;
 public class VersaoDAO implements DAO<Versao> {
 
     @Override
-    public int insert() {
+    public int insert(Versao v) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -16,7 +16,7 @@ public class VersaoDAO implements DAO<Versao> {
     }
 
     @Override
-    public int update(Versao t) {
+    public int update(Versao v) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 

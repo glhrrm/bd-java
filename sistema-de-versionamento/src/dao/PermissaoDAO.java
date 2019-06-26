@@ -6,7 +6,7 @@ import pojo.Permissao;
 public class PermissaoDAO implements DAO<Permissao> {
 
     @Override
-    public int insert() {
+    public int insert(Permissao p) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
@@ -16,7 +16,7 @@ public class PermissaoDAO implements DAO<Permissao> {
     }
 
     @Override
-    public int update(Permissao t) {
+    public int update(Permissao p) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
