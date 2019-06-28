@@ -1,8 +1,8 @@
 create or replace procedure adiciona_versao
 (
-	p_versao	in	versoes.versao%type,
-	p_novidades	in	versoes.novidades%type,
-	p_id_sistema	in	versoes.id_sistema%type
+	p_versao in versoes.versao%type,
+	p_novidades in versoes.novidades%type,
+	p_id_sistema in versoes.id_sistema%type
 ) is
 begin
 	insert into versoes (
@@ -21,8 +21,8 @@ end;
 show errors;
 
 create or replace procedure cont_versoes_sistema (
-	p_id_sistema	IN	versoes.id_sistema%type,
-	p_contador	OUT	number
+	p_id_sistema in versoes.id_sistema%type,
+	p_contador out number
 ) is
 begin
 	select count(*)
