@@ -41,6 +41,24 @@ var contador number;
 exec cont_versoes_sistema(1, :contador);
 print contador;
 
+-- PROCEDURE #3 COM PARÂMETRO OUT + CURSOR
+
+create or replace procedure usuarios_depto (
+	p_id_departamento in departamento.id_departamento%type,
+	p_usuarios out sys_refcursor
+) is
+begin
+	open p_usuarios for
+    select * from usuario
+    where id_departamento = p_id_departamento;
+end;
+/
+show errors;
+
+var usuarios refcursor;
+exec usuarios_depto(1, :usuarios);
+print usuarios;
+
 -- TRIGGER
 
 create or replace trigger trigger_criacao_sistema before
