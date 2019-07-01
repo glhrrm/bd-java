@@ -59,6 +59,72 @@ var usuarios refcursor;
 exec usuarios_depto(1, :usuarios);
 print usuarios;
 
+-- FUNCTION #1
+create or replace FUNCTION nivel_evolucao_sistema (
+    p_id_sistema   IN sistema.id_sistema%type
+) RETURN VARCHAR2 IS
+    v_total    NUMBER;
+    p_output   VARCHAR2(50);
+BEGIN
+    SELECT
+        COUNT(*)
+    INTO
+        v_total
+    FROM
+        versoes
+    where id_sistema = p_id_sistema;
+
+    IF
+        v_total = 0
+    THEN
+        p_output := 'Sistema inalterado';
+    ELSIF v_total <= 1 THEN
+        p_output := 'Sistema pouco evoluído';
+    ELSIF v_total <= 5 THEN
+        p_output := 'Sistema razoavelmente evoluído';
+    ELSE
+        p_output := 'Sistema superevoluído';
+    END IF;
+
+    RETURN p_output;
+END;
+
+var output varchar2;
+exec :output := nivel_evolucao_sistema(1);
+print output;
+
+-- FUNCTION #2
+CREATE OR REPLACE FUNCTION situacao_sistema (
+    p_id_sistema   IN          sistema.id_sistema%TYPE
+) RETURN VARCHAR2 IS
+    v_ativo      NUMBER;
+    p_situacao   VARCHAR2(50);
+BEGIN
+    SELECT
+        ativo
+    INTO v_ativo
+    FROM
+        sistema
+    WHERE
+        id_sistema = p_id_sistema;
+
+    IF v_ativo = 1 THEN
+        p_situacao := 'Sistema ativo';
+    ELSE
+        p_situacao := 'Sistema inativo';
+    END IF;
+
+    RETURN p_situacao;
+END;
+/
+SHOW ERRORS;
+
+var output varchar2;
+exec :output := situacao_sistema(1);
+print output;
+
+-- FUNCTION #3
+
 -- TRIGGER
 
 create or replace trigger trigger_criacao_sistema before
