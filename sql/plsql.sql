@@ -138,19 +138,3 @@ begin
     end if;
 end;
 /
-
--- FUNCTION
-CREATE OR REPLACE FUNCTION situacao_sistema (p_sistema IN NUMBER, p_situacao OUT varchar2) RETURN varchar2 IS situacao varchar2;
-BEGIN
-SELECT ativo,
-	CASE ATIVO 
-		WHEN 1 THEN dbms_output.put_line('Sistema está Ativo');
-		WHEN 2 THEN dbms_output.put_line('Sistema está inativo');
-	ELSE dbms_output.put_line('Valor inválido');
-	END CASE;
-FROM SISTEMA
-WHERE ID_SISTEMA = p_sistema
-
-RETURN situacao;
-END
-;
