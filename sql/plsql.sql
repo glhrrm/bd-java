@@ -59,8 +59,28 @@ var usuarios refcursor;
 exec usuarios_depto(1, :usuarios);
 print usuarios;
 
--- FUNCTION #1
-create or replace FUNCTION nivel_evolucao_sistema (
+-- FUNCTIONS + PACKAGE
+
+CREATE OR REPLACE PACKAGE pkg_functions as
+
+FUNCTION nivel_evolucao_sistema (
+    p_id_sistema   IN sistema.id_sistema%type
+) RETURN VARCHAR2;
+
+FUNCTION situacao_sistema (
+    p_id_sistema   IN          sistema.id_sistema%TYPE
+) RETURN VARCHAR2;
+
+FUNCTION dados_usuario (
+    p_id_usuario   IN usuario.id_usuario%TYPE
+) RETURN SYS_REFCURSOR;
+
+END;
+/
+
+CREATE OR REPLACE PACKAGE BODY pkg_functions as
+
+FUNCTION nivel_evolucao_sistema (
     p_id_sistema   IN sistema.id_sistema%type
 ) RETURN VARCHAR2 IS
     v_total    NUMBER;
@@ -89,12 +109,7 @@ BEGIN
     RETURN p_output;
 END;
 
-var output varchar2;
-exec :output := nivel_evolucao_sistema(1);
-print output;
-
--- FUNCTION #2
-CREATE OR REPLACE FUNCTION situacao_sistema (
+FUNCTION situacao_sistema (
     p_id_sistema   IN          sistema.id_sistema%TYPE
 ) RETURN VARCHAR2 IS
     v_ativo      NUMBER;
@@ -116,15 +131,8 @@ BEGIN
 
     RETURN p_situacao;
 END;
-/
-SHOW ERRORS;
 
-var output varchar2;
-exec :output := situacao_sistema(1);
-print output;
-
--- FUNCTION #3
-create or replace FUNCTION dados_usuario (
+FUNCTION dados_usuario (
     p_id_usuario   IN usuario.id_usuario%TYPE
 ) RETURN SYS_REFCURSOR IS
     c_usuario sys_refcursor;
@@ -143,11 +151,20 @@ OPEN c_usuario FOR
     
     RETURN c_usuario;
 END;
+
+end pkg_functions;
 /
-show errors;
+
+var output varchar2;
+exec :output := pkg_functions.nivel_evolucao_sistema(1);
+print output;
+
+var output varchar2;
+exec :output := pkg_functions.situacao_sistema(1);
+print output;
 
 var usuarios refcursor;
-exec :usuarios := dados_usuario(1);
+exec :usuarios := pkg_functions.dados_usuario(1);
 print usuarios;
 
 -- TRIGGER
