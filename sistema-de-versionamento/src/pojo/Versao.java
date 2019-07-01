@@ -13,14 +13,12 @@ public class Versao {
     public Versao() {
     }
 
-    public Versao(int idVersao, String versao, String novidades, Sistema sistema) {
-        this.idVersao = idVersao;
-        this.versao = versao;
-        this.novidades = novidades;
-        this.sistema = sistema;
+    public Versao(String versao, String novidades, Sistema sistema) {
+        this(-1, versao, novidades, sistema);
     }
 
-    public Versao(String versao, String novidades, Sistema sistema) {
+    public Versao(int idVersao, String versao, String novidades, Sistema sistema) {
+        this.idVersao = idVersao;
         this.versao = versao;
         this.novidades = novidades;
         this.sistema = sistema;

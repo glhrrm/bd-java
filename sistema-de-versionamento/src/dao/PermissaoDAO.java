@@ -29,9 +29,11 @@ public class PermissaoDAO implements DAO<Permissao> {
             ResultSet chaves = stmt.getGeneratedKeys();
 
             if (chaves.next()) {
-                chavePrimaria = chaves.getInt(1);
+                //chavePrimaria = chaves.getInt(1);
+                chavePrimaria = 1;
             }
         } catch (SQLException ex) {
+            ex.printStackTrace();
             System.out.println("Exceção com recursos");
         }
         return chavePrimaria;
@@ -48,7 +50,7 @@ public class PermissaoDAO implements DAO<Permissao> {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int id = rs.getInt("idPermissao");
+                int id = rs.getInt("id_Permissao");
                 String nome = rs.getString("nome");
                 permissoes.add(new Permissao(id, nome));
             }
@@ -103,7 +105,7 @@ public class PermissaoDAO implements DAO<Permissao> {
 
     @Override
     public Permissao findById(int id) {
-        Permissao p;
+        Permissao p = null;
         try (Connection connection = new ConnectionFactory().getConnection();
                 PreparedStatement stmt = connection.prepareStatement(SQLs.FINDBYID_PERMISSAO.getSql())) {
 
@@ -122,7 +124,7 @@ public class PermissaoDAO implements DAO<Permissao> {
         } catch (Exception ex) {
             System.out.println("Exceção no código!- findById");
         }
-        return null;
+        return p;
     }
 
     public Permissao find(Connection connection, int idPermissao) {
@@ -135,7 +137,7 @@ public class PermissaoDAO implements DAO<Permissao> {
 
             while (rs.next()) {
                 String nome = rs.getString("nome");
-                return new Permissao(idPermissao, nome);
+                return new Permissao(nome);
             }
         } catch (SQLException e) {
             System.out.println("Exceção find PeriodoDAO");

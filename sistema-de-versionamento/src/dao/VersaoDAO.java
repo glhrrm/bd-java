@@ -51,10 +51,10 @@ public class VersaoDAO implements DAO<Versao> {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int id = rs.getInt("idVersao");
+                int id = rs.getInt("id_Versao");
                 String versao = rs.getString("versao");
                 String novidades = rs.getString("novidades");
-                Sistema sistema = new SistemaDAO().find(connection, rs.getInt("idSistema"));
+                Sistema sistema = new SistemaDAO().find(connection, rs.getInt("id_Sistema"));
                 versoes.add(new Versao(id, versao, novidades, sistema));
             }
 
@@ -110,7 +110,7 @@ public class VersaoDAO implements DAO<Versao> {
 
     @Override
     public Versao findById(int id) {
-        Versao v;
+        Versao v = null;
         try (Connection connection = new ConnectionFactory().getConnection();
                 PreparedStatement stmt = connection.prepareStatement(SQLs.FINDBYID_VERSAO.getSql())) {
 
@@ -123,7 +123,7 @@ public class VersaoDAO implements DAO<Versao> {
             while (rs.next()) {
                 String versao = rs.getString("versao");
                 String novidades = rs.getString("novidades");
-                Sistema sistema = new SistemaDAO().find(connection, rs.getInt("idSistema"));
+                Sistema sistema = new SistemaDAO().find(connection, rs.getInt("id_Sistema"));
                 v = new Versao(id, versao, novidades, sistema);
             }
         } catch (SQLException ex) {
@@ -131,7 +131,7 @@ public class VersaoDAO implements DAO<Versao> {
         } catch (Exception ex) {
             System.out.println("Exceção no código!- findById");
         }
-        return null;
+        return v;
     }
 
 }

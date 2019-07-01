@@ -14,14 +14,12 @@ public class Sistema {
     public Sistema() {
     }
 
-    public Sistema(int idSistema, boolean ativo, LocalDate criacao, Usuario usuario) {
-        this.idSistema = idSistema;
-        this.ativo = ativo;
-        this.criacao = criacao;
-        this.usuario = usuario;
+    public Sistema(boolean ativo, LocalDate criacao, Usuario usuario) {
+        this(-1, ativo, criacao, usuario);
     }
 
-    public Sistema(boolean ativo, LocalDate criacao, Usuario usuario) {
+    public Sistema(int idSistema, boolean ativo, LocalDate criacao, Usuario usuario) {
+        this.idSistema = idSistema;
         this.ativo = ativo;
         this.criacao = criacao;
         this.usuario = usuario;

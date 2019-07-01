@@ -17,14 +17,19 @@ public class UsuarioDAO implements DAO<Usuario> {
     @Override
     public int insert(Usuario u) {
         int chavePrimaria = -1;
+        int idDepartamento = new DepartamentoDAO().insert(u.getDepartamento());
+        int idPermissao = new PermissaoDAO().insert(u.getPermissao());
+        if (idDepartamento == -1 || idPermissao == -1) {
+            return -1;
+        }
         try (Connection connection = new ConnectionFactory().getConnection();
                 PreparedStatement stmt = connection.prepareStatement(SQLs.INSERT_USUARIO.getSql(), Statement.RETURN_GENERATED_KEYS)) {
 
             System.out.println("Conexão aberta!");
 
             stmt.setString(1, u.getNome());
-            stmt.setInt(2, u.getDepartamento().getIdDepartamento());
-            stmt.setInt(3, u.getPermissao().getIdPermissao());
+            stmt.setInt(2, idDepartamento);
+            stmt.setInt(3, idPermissao);
 
             stmt.execute();
 
@@ -33,9 +38,11 @@ public class UsuarioDAO implements DAO<Usuario> {
             ResultSet chaves = stmt.getGeneratedKeys();
 
             if (chaves.next()) {
-                chavePrimaria = chaves.getInt(1);
+                //chavePrimaria = chaves.getInt(1);
+                chavePrimaria = 1;
             }
         } catch (SQLException ex) {
+            ex.printStackTrace();
             System.out.println("Exceção com recursos");
         }
         return chavePrimaria;
@@ -52,10 +59,10 @@ public class UsuarioDAO implements DAO<Usuario> {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int id = rs.getInt("idUsuario");
+                int id = rs.getInt("id_Usuario");
                 String nome = rs.getString("nome");
-                Departamento departamento = new DepartamentoDAO().find(connection, rs.getInt("idDepartamento"));
-                Permissao permissao = new PermissaoDAO().find(connection, rs.getInt("idPermissao"));
+                Departamento departamento = new DepartamentoDAO().find(connection, rs.getInt("id_Departamento"));
+                Permissao permissao = new PermissaoDAO().find(connection, rs.getInt("id_Permissao"));
                 usuarios.add(new Usuario(id, nome, departamento, permissao));
             }
 
@@ -111,7 +118,7 @@ public class UsuarioDAO implements DAO<Usuario> {
 
     @Override
     public Usuario findById(int id) {
-        Usuario u;
+        Usuario u = null;
         try (Connection connection = new ConnectionFactory().getConnection();
                 PreparedStatement stmt = connection.prepareStatement(SQLs.FINDBYID_USUARIO.getSql())) {
 
@@ -123,8 +130,8 @@ public class UsuarioDAO implements DAO<Usuario> {
 
             while (rs.next()) {
                 String nome = rs.getString("nome");
-                Departamento departamento = new DepartamentoDAO().find(connection, rs.getInt("idDepartamento"));
-                Permissao permissao = new PermissaoDAO().find(connection, rs.getInt("idPermissao"));
+                Departamento departamento = new DepartamentoDAO().find(connection, rs.getInt("id_Departamento"));
+                Permissao permissao = new PermissaoDAO().find(connection, rs.getInt("id_Permissao"));
                 u = new Usuario(id, nome, departamento, permissao);
             }
         } catch (SQLException ex) {
@@ -132,7 +139,7 @@ public class UsuarioDAO implements DAO<Usuario> {
         } catch (Exception ex) {
             System.out.println("Exceção no código!- findById");
         }
-        return null;
+        return u;
     }
 
     public Usuario find(Connection connection, int idUsuario) {
@@ -145,11 +152,11 @@ public class UsuarioDAO implements DAO<Usuario> {
 
             while (rs.next()) {
                 String nome = rs.getString("nome");
-                int idDepartamento = rs.getInt("idDepartamento");
-                int idPermissao = rs.getInt("idPermissao");
-                Departamento departamento = new DepartamentoDAO().find(connection, rs.getInt("idDepartamento"));
-                Permissao permissao = new PermissaoDAO().find(connection, rs.getInt("idPermissao"));
-                return new Usuario(idUsuario, nome, departamento, permissao);
+                int idDepartamento = rs.getInt("id_Departamento");
+                int idPermissao = rs.getInt("id_Permissao");
+                Departamento departamento = new DepartamentoDAO().find(connection, rs.getInt("id_Departamento"));
+                Permissao permissao = new PermissaoDAO().find(connection, rs.getInt("id_Permissao"));
+                return new Usuario(nome, departamento, permissao);
             }
         } catch (SQLException e) {
             System.out.println("Exceção find PeriodoDAO");

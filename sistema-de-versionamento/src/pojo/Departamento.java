@@ -10,13 +10,13 @@ public class Departamento {
 
     public Departamento() {
     }
+    
+    public Departamento(String nome) {
+        this(-1, nome);
+    }
 
     public Departamento(int idDepartamento, String nome) {
         this.idDepartamento = idDepartamento;
-        this.nome = nome;
-    }
-
-    public Departamento(String nome) {
         this.nome = nome;
     }
 

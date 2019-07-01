@@ -11,12 +11,12 @@ public class Permissao {
     public Permissao() {
     }
 
-    public Permissao(int idPermissao, String nome) {
-        this.idPermissao = idPermissao;
-        this.nome = nome;
+    public Permissao(String nome) {
+        this(-1, nome);
     }
 
-    public Permissao(String nome) {
+    public Permissao(int idPermissao, String nome) {
+        this.idPermissao = idPermissao;
         this.nome = nome;
     }
 

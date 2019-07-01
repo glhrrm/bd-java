@@ -18,6 +18,10 @@ public class SistemaDAO implements DAO<Sistema> {
     @Override
     public int insert(Sistema s) {
         int chavePrimaria = -1;
+        int idUsuario = new UsuarioDAO().insert(s.getUsuario());
+        if (idUsuario == -1) {
+            return -1;
+        }
         try (Connection connection = new ConnectionFactory().getConnection();
                 PreparedStatement stmt = connection.prepareStatement(SQLs.INSERT_SISTEMA.getSql(), Statement.RETURN_GENERATED_KEYS)) {
 
@@ -25,7 +29,7 @@ public class SistemaDAO implements DAO<Sistema> {
 
             stmt.setInt(1, (s.isAtivo() == true) ? 1 : 0);
             stmt.setDate(2, Date.valueOf(s.getCriacao()));
-            stmt.setInt(3, s.getUsuario().getIdUsuario());
+            stmt.setInt(3, idUsuario);
 
             stmt.execute();
 
@@ -34,7 +38,8 @@ public class SistemaDAO implements DAO<Sistema> {
             ResultSet chaves = stmt.getGeneratedKeys();
 
             if (chaves.next()) {
-                chavePrimaria = chaves.getInt(1);
+                //chavePrimaria = chaves.getInt(1);
+                chavePrimaria = 1;
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -54,10 +59,10 @@ public class SistemaDAO implements DAO<Sistema> {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int id = rs.getInt("idSistema");
+                int id = rs.getInt("id_Sistema");
                 boolean ativo = (rs.getInt("ativo") == 1) ? true : false;
                 LocalDate criacao = rs.getDate("criacao").toLocalDate();
-                Usuario usuario = new UsuarioDAO().find(connection, rs.getInt("idUsuario"));
+                Usuario usuario = new UsuarioDAO().find(connection, rs.getInt("id_Usuario"));
                 sistemas.add(new Sistema(id, ativo, criacao, usuario));
             }
 
@@ -113,7 +118,7 @@ public class SistemaDAO implements DAO<Sistema> {
 
     @Override
     public Sistema findById(int id) {
-        Sistema s;
+        Sistema s = null;
         try (Connection connection = new ConnectionFactory().getConnection();
                 PreparedStatement stmt = connection.prepareStatement(SQLs.FINDBYID_SISTEMA.getSql())) {
 
@@ -126,7 +131,7 @@ public class SistemaDAO implements DAO<Sistema> {
             while (rs.next()) {
                 boolean ativo = (rs.getInt("ativo") == 1) ? true : false;
                 LocalDate criacao = rs.getDate("criacao").toLocalDate();
-                Usuario usuario = new UsuarioDAO().find(connection, rs.getInt("idUsuario"));
+                Usuario usuario = new UsuarioDAO().find(connection, rs.getInt("id_Usuario"));
                 s = new Sistema(id, ativo, criacao, usuario);
             }
         } catch (SQLException ex) {
@@ -134,9 +139,9 @@ public class SistemaDAO implements DAO<Sistema> {
         } catch (Exception ex) {
             System.out.println("Exceção no código!- findById");
         }
-        return null;
+        return s;
     }
-    
+
     public Sistema find(Connection connection, int idSistema) {
         try {
             PreparedStatement stmt = connection.prepareStatement(SQLs.FINDBYID_SISTEMA.getSql());
@@ -148,8 +153,8 @@ public class SistemaDAO implements DAO<Sistema> {
             while (rs.next()) {
                 boolean ativo = (rs.getInt("ativo") == 1) ? true : false;
                 LocalDate criacao = rs.getDate("criacao").toLocalDate();
-                Usuario usuario = new UsuarioDAO().find(connection, rs.getInt("idUsuario"));
-                return new Sistema(idSistema, ativo, criacao, usuario);
+                Usuario usuario = new UsuarioDAO().find(connection, rs.getInt("id_Usuario"));
+                return new Sistema(ativo, criacao, usuario);
             }
         } catch (SQLException e) {
             System.out.println("Exceção find PeriodoDAO");

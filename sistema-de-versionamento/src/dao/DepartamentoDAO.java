@@ -29,9 +29,11 @@ public class DepartamentoDAO implements DAO<Departamento> {
             ResultSet chaves = stmt.getGeneratedKeys();
 
             if (chaves.next()) {
-                chavePrimaria = chaves.getInt(1);
+                //chavePrimaria = chaves.getInt(1);
+                chavePrimaria = 1;
             }
         } catch (SQLException ex) {
+            ex.printStackTrace();
             System.out.println("Exceção com recursos");
         }
         return chavePrimaria;
@@ -48,7 +50,7 @@ public class DepartamentoDAO implements DAO<Departamento> {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
-                int id = rs.getInt("idDepartamento");
+                int id = rs.getInt("id_Departamento");
                 String nome = rs.getString("nome");
                 departamentos.add(new Departamento(id, nome));
             }
@@ -103,7 +105,7 @@ public class DepartamentoDAO implements DAO<Departamento> {
 
     @Override
     public Departamento findById(int id) {
-        Departamento d;
+        Departamento d = null;
         try (Connection connection = new ConnectionFactory().getConnection();
                 PreparedStatement stmt = connection.prepareStatement(SQLs.FINDBYID_DEPARTAMENTO.getSql())) {
 
@@ -122,7 +124,7 @@ public class DepartamentoDAO implements DAO<Departamento> {
         } catch (Exception ex) {
             System.out.println("Exceção no código!- findById");
         }
-        return null;
+        return d;
     }
 
     public Departamento find(Connection connection, int idDepartamento) {
@@ -135,7 +137,7 @@ public class DepartamentoDAO implements DAO<Departamento> {
 
             while (rs.next()) {
                 String nome = rs.getString("nome");
-                return new Departamento(idDepartamento, nome);
+                return new Departamento(nome);
             }
         } catch (SQLException e) {
             System.out.println("Exceção find PeriodoDAO");

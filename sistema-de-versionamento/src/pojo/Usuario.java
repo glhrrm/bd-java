@@ -13,14 +13,12 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(int idUsuario, String nome, Departamento departamento, Permissao permissao) {
-        this.idUsuario = idUsuario;
-        this.nome = nome;
-        this.departamento = departamento;
-        this.permissao = permissao;
+    public Usuario(String nome, Departamento departamento, Permissao permissao) {
+        this(-1, nome, departamento, permissao);
     }
 
-    public Usuario(String nome, Departamento departamento, Permissao permissao) {
+    public Usuario(int idUsuario, String nome, Departamento departamento, Permissao permissao) {
+        this.idUsuario = idUsuario;
         this.nome = nome;
         this.departamento = departamento;
         this.permissao = permissao;
