@@ -96,6 +96,32 @@ VAR output VARCHAR2(50);
 EXEC :output := nivel_evolucao_sistema(9);
 PRINT output;
 
+-- FUNCTION #2 (TERMINAR)
+
+CREATE OR REPLACE FUNCTION dados_usuario (
+    p_id_usuario   IN usuario.id_usuario%TYPE
+) RETURN SYS_REFCURSOR IS
+    c_usuario sys_refcursor;
+BEGIN
+OPEN c_usuario FOR
+    SELECT
+        usuario.nome,
+        departamento.nome AS departamento,
+        permissao.nome AS permissao
+    FROM
+        usuario
+        INNER JOIN departamento ON usuario.id_departamento = departamento.id_departamento
+        INNER JOIN permissao ON permissao.id_permissao = usuario.id_permissao;
+END;
+/
+SHOW ERRORS;
+
+VARIABLE output REFCURSOR;
+
+EXEC :output := dados_usuario(1);
+
+PRINT output;
+
 -- TRIGGER
 
 create or replace trigger trigger_criacao_sistema before
