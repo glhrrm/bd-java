@@ -20,6 +20,12 @@ public class Usuario {
         this.permissao = permissao;
     }
 
+    public Usuario(String nome, Departamento departamento, Permissao permissao) {
+        this.nome = nome;
+        this.departamento = departamento;
+        this.permissao = permissao;
+    }
+
     public int getIdUsuario() {
         return idUsuario;
     }
@@ -58,7 +64,7 @@ public class Usuario {
                 ? "Usuario{" + "idUsuario=" + idUsuario + ", nome=" + nome + ", departamento=" + departamento + ", permissao=" + permissao + '}'
                 : "Usuario{" + "idUsuario=" + idUsuario + ", nome=" + nome + ", departamento não informado, permissao não informada";
     }
-    
+
     public int insert() {
         return new UsuarioDAO().insert(this);
     }

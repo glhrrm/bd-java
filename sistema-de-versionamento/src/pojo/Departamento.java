@@ -16,6 +16,10 @@ public class Departamento {
         this.nome = nome;
     }
 
+    public Departamento(String nome) {
+        this.nome = nome;
+    }
+
     public int getIdDepartamento() {
         return idDepartamento;
     }
@@ -36,7 +40,7 @@ public class Departamento {
     public String toString() {
         return "Departamento{" + "idDepartamento=" + idDepartamento + ", nome=" + nome + '}';
     }
-    
+
     public int insert() {
         return new DepartamentoDAO().insert(this);
     }

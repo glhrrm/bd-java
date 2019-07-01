@@ -20,6 +20,12 @@ public class Versao {
         this.sistema = sistema;
     }
 
+    public Versao(String versao, String novidades, Sistema sistema) {
+        this.versao = versao;
+        this.novidades = novidades;
+        this.sistema = sistema;
+    }
+
     public int getIdVersao() {
         return idVersao;
     }
@@ -58,7 +64,7 @@ public class Versao {
                 ? "Versao{" + "idVersao=" + idVersao + ", versao=" + versao + ", novidades=" + novidades + ", sistema=" + sistema + '}'
                 : "Versao{" + "idVersao=" + idVersao + ", versao=" + versao + ", novidades=" + novidades + ", sistema não informado";
     }
-    
+
     public int insert() {
         return new VersaoDAO().insert(this);
     }

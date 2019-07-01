@@ -16,6 +16,10 @@ public class Permissao {
         this.nome = nome;
     }
 
+    public Permissao(String nome) {
+        this.nome = nome;
+    }
+
     public int getIdPermissao() {
         return idPermissao;
     }
@@ -36,7 +40,7 @@ public class Permissao {
     public String toString() {
         return "Permissao{" + "idPermissao=" + idPermissao + ", nome=" + nome + '}';
     }
-    
+
     public int insert() {
         return new PermissaoDAO().insert(this);
     }

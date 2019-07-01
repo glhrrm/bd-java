@@ -21,6 +21,12 @@ public class Sistema {
         this.usuario = usuario;
     }
 
+    public Sistema(boolean ativo, LocalDate criacao, Usuario usuario) {
+        this.ativo = ativo;
+        this.criacao = criacao;
+        this.usuario = usuario;
+    }
+
     public int getIdSistema() {
         return idSistema;
     }
@@ -79,6 +85,5 @@ public class Sistema {
     public Sistema findById(int id) {
         return new SistemaDAO().findById(id);
     }
-
 
 }
