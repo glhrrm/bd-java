@@ -124,6 +124,31 @@ exec :output := situacao_sistema(1);
 print output;
 
 -- FUNCTION #3
+create or replace FUNCTION dados_usuario (
+    p_id_usuario   IN usuario.id_usuario%TYPE
+) RETURN SYS_REFCURSOR IS
+    c_usuario sys_refcursor;
+BEGIN
+OPEN c_usuario FOR
+    SELECT
+        usuario.nome,
+        departamento.nome AS departamento,
+        permissao.nome AS permissao
+    FROM
+        usuario
+        INNER JOIN departamento ON usuario.id_departamento = departamento.id_departamento
+        INNER JOIN permissao ON permissao.id_permissao = usuario.id_permissao
+    WHERE
+        usuario.id_usuario = p_id_usuario;
+    
+    RETURN c_usuario;
+END;
+/
+show errors;
+
+var usuarios refcursor;
+exec :usuarios := dados_usuario(1);
+print usuarios;
 
 -- TRIGGER
 
